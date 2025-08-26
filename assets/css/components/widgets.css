@@ -1,0 +1,368 @@
+ /* assets/css/components/widgets.css */
+
+/* ========================================
+   GRIDSTACK & WIDGET STYLES
+======================================== */
+
+/* Grid Container */
+.grid-stack {
+    margin-top: var(--space-lg);
+    min-height: 400px;
+}
+
+.grid-stack-item {
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    transition: all var(--transition-fast);
+}
+
+.grid-stack-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.grid-stack-item-content {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    padding: var(--space-lg);
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    transition: all var(--transition-fast);
+    display: flex;
+    flex-direction: column;
+}
+
+.grid-stack-item-content:hover {
+    border-color: var(--accent-green);
+}
+
+/* Widget Header */
+.widget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-md);
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+.widget-title {
+    font-size: var(--font-size-md);
+    font-weight: 600;
+    color: var(--text-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+    margin-right: var(--space-sm);
+}
+
+.widget-actions {
+    display: flex;
+    gap: var(--space-xs);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(10px);
+    transition: all var(--transition-fast);
+    flex-shrink: 0;
+}
+
+.grid-stack-item:hover .widget-actions {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+}
+
+.widget-btn {
+    background: var(--secondary-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: var(--space-xs);
+    border-radius: var(--border-radius-sm);
+    transition: all var(--transition-fast);
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-sm);
+}
+
+.widget-btn:hover {
+    color: var(--text-primary);
+    background-color: var(--card-bg);
+    border-color: var(--accent-green);
+    transform: scale(1.1);
+}
+
+.widget-btn.danger:hover {
+    background-color: var(--danger-color);
+    border-color: var(--danger-color);
+    color: white;
+}
+
+/* Widget Content */
+.widget-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.widget-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    color: var(--text-secondary);
+    padding: var(--space-lg);
+}
+
+.widget-placeholder i {
+    font-size: 2.5rem;
+    margin-bottom: var(--space-md);
+    opacity: 0.5;
+    color: var(--accent-green);
+}
+
+.widget-placeholder p {
+    font-size: var(--font-size-md);
+    font-weight: 500;
+    margin-bottom: var(--space-sm);
+    color: var(--text-primary);
+}
+
+.widget-placeholder small {
+    font-size: var(--font-size-xs);
+    opacity: 0.7;
+}
+
+/* Widget Types */
+.widget-gauge .widget-placeholder i { font-size: 3rem; }
+.widget-chart .widget-placeholder i { color: #3b82f6; }
+.widget-metric .widget-placeholder i { color: #10b981; }
+.widget-toggle .widget-placeholder i { color: #f59e0b; }
+.widget-map .widget-placeholder i { color: #ef4444; }
+
+/* Grid Edit Mode */
+.grid-stack.edit-mode .grid-stack-item-content {
+    cursor: move;
+    border-style: dashed;
+}
+
+.grid-stack.edit-mode .grid-stack-item:hover .grid-stack-item-content {
+    border-color: var(--accent-green);
+    background-color: var(--secondary-bg);
+}
+
+/* GridStack Resize Handles */
+.ui-resizable-handle {
+    background-color: var(--accent-green);
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
+.grid-stack-item:hover .ui-resizable-handle {
+    opacity: 0.7;
+}
+
+.ui-resizable-se {
+    width: 12px !important;
+    height: 12px !important;
+    right: 2px !important;
+    bottom: 2px !important;
+    border-radius: 50%;
+}
+
+/* Responsive Widget Styles */
+@media (max-width: 768px) {
+    .grid-stack-item-content {
+        padding: var(--space-md);
+    }
+    
+    .widget-header {
+        margin-bottom: var(--space-sm);
+        padding-bottom: var(--space-xs);
+    }
+    
+    .widget-title {
+        font-size: var(--font-size-sm);
+    }
+    
+    .widget-actions {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(0);
+        position: static;
+    }
+    
+    .widget-btn {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .widget-placeholder {
+        padding: var(--space-md);
+    }
+    
+    .widget-placeholder i {
+        font-size: 2rem;
+        margin-bottom: var(--space-sm);
+    }
+    
+    .widget-placeholder p {
+        font-size: var(--font-size-sm);
+    }
+}
+
+/* Widget Animation States */
+.widget-loading {
+    pointer-events: none;
+}
+
+.widget-loading .widget-content::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(1px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.widget-loading .widget-content::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 24px;
+    height: 24px;
+    border: 3px solid var(--border-color);
+    border-top: 3px solid var(--accent-green);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    z-index: 10;
+}
+
+/* Widget Error State */
+.widget-error .widget-content {
+    background-color: rgba(239, 68, 68, 0.1);
+    border-color: var(--danger-color);
+}
+
+.widget-error .widget-placeholder {
+    color: var(--danger-color);
+}
+
+.widget-error .widget-placeholder i {
+    color: var(--danger-color);
+    opacity: 0.7;
+}
+
+/* Widget Success State */
+.widget-success .widget-header {
+    border-bottom-color: var(--success-color);
+}
+
+.widget-success .widget-title {
+    color: var(--success-color);
+}
+
+/* Grid Animations */
+@keyframes gridItemFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.grid-stack-item.gs-new {
+    animation: gridItemFadeIn 0.3s ease-out;
+}
+
+/* Drag & Drop Indicators */
+.grid-stack-placeholder {
+    background-color: var(--accent-green) !important;
+    opacity: 0.3 !important;
+    border-radius: var(--border-radius-lg) !important;
+    border: 2px dashed var(--accent-green) !important;
+}
+
+.grid-stack-item.ui-draggable-dragging {
+    transform: rotate(2deg) !important;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3) !important;
+    z-index: 1000 !important;
+}
+
+/* Widget Themes */
+.widget-theme-primary .widget-header {
+    background: linear-gradient(135deg, var(--accent-green), #22c55e);
+    color: white;
+    margin: calc(-1 * var(--space-lg)) calc(-1 * var(--space-lg)) var(--space-md);
+    padding: var(--space-md) var(--space-lg);
+    border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+    border-bottom: none;
+}
+
+.widget-theme-primary .widget-title {
+    color: white;
+}
+
+.widget-theme-primary .widget-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+.widget-theme-primary .widget-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Grid Helper Classes */
+.grid-hidden {
+    display: none !important;
+}
+
+.grid-visible {
+    display: block !important;
+}
+
+.grid-full-height {
+    height: calc(100vh - var(--header-height) - var(--space-lg) * 2 - 80px);
+}
+
+/* Touch-friendly adjustments */
+@media (hover: none) and (pointer: coarse) {
+    .widget-actions {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: translateX(0) !important;
+    }
+    
+    .widget-btn {
+        min-width: 36px !important;
+        min-height: 36px !important;
+    }
+    
+    .ui-resizable-handle {
+        opacity: 0.8 !important;
+        width: 20px !important;
+        height: 20px !important;
+    }
+}
