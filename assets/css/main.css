@@ -1,0 +1,1707 @@
+/* ========================================
+   FIELDMONITOR IOT DASHBOARD - MAIN STYLES
+   Clean, organized CSS with clear sections
+======================================== */
+
+/* ========================================
+   1. CSS VARIABLES & THEMES
+======================================== */
+:root {
+    /* Color Palette - Dark Theme (Default) */
+    --primary-bg: #1a1a1a;
+    --secondary-bg: #2a2a2a;
+    --card-bg: #3a3a3a;
+    --accent-green: #4ade80;
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0a0;
+    --border-color: #4a4a4a;
+    --danger-color: #ef4444;
+    --warning-color: #f59e0b;
+    --success-color: #10b981;
+    
+    /* Spacing System */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+    
+    /* Typography Scale */
+    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --font-size-xs: 12px;
+    --font-size-sm: 14px;
+    --font-size-md: 16px;
+    --font-size-lg: 18px;
+    --font-size-xl: 24px;
+    --font-size-xxl: 32px;
+    
+    /* Layout Dimensions */
+    --header-height: 60px;
+    --sidebar-width: 280px;
+    --border-radius: 8px;
+    --border-radius-sm: 4px;
+    --border-radius-lg: 12px;
+    
+    /* Animation Timing */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
+    
+    /* Z-Index Scale */
+    --z-header: 1000;
+    --z-sidebar: 999;
+    --z-modal: 2000;
+    --z-notification: 1500;
+}
+
+/* Light Theme Override */
+[data-theme="light"] {
+    --primary-bg: #f8fafc;
+    --secondary-bg: #ffffff;
+    --card-bg: #ffffff;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --border-color: #e2e8f0;
+}
+
+/* ========================================
+   2. RESET & BASE STYLES
+======================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--primary-bg);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    transition: background-color var(--transition-normal), color var(--transition-normal);
+    line-height: 1.5;
+}
+
+.app-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ========================================
+   3. UTILITY CLASSES
+======================================== */
+.hidden {
+    display: none !important;
+}
+
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid var(--text-secondary);
+    border-radius: 50%;
+    border-top-color: var(--accent-green);
+    animation: spin 1s ease-in-out infinite;
+}
+
+.fade-in {
+    animation: fadeIn var(--transition-normal);
+}
+
+.slide-up {
+    animation: slideUp var(--transition-normal);
+}
+
+/* ========================================
+   4. BUTTON STYLES
+======================================== */
+.btn {
+    padding: var(--space-sm) var(--space-md);
+    border: none;
+    border-radius: var(--border-radius-sm);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    text-decoration: none;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.btn-primary {
+    background-color: var(--accent-green);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #22c55e;
+}
+
+.btn-secondary {
+    background-color: var(--secondary-bg);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+    background-color: var(--border-color);
+}
+
+.btn-danger {
+    background-color: var(--danger-color);
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #dc2626;
+}
+
+/* ========================================
+   5. FORM STYLES
+======================================== */
+.form-input,
+.form-textarea,
+.form-select {
+    width: 100%;
+    padding: var(--space-sm) var(--space-md);
+    background-color: var(--secondary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    color: var(--text-primary);
+    font-size: var(--font-size-sm);
+    transition: border-color var(--transition-fast);
+    font-family: inherit;
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+    outline: none;
+    border-color: var(--accent-green);
+    box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.2);
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+    color: var(--text-secondary);
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* Form Validation */
+.form-input.error,
+.form-textarea.error {
+    border-color: var(--danger-color) !important;
+    box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2) !important;
+}
+
+.form-error {
+    display: none;
+    font-size: var(--font-size-xs);
+    color: var(--danger-color);
+    margin-top: var(--space-xs);
+}
+
+.form-group {
+    margin-bottom: var(--space-lg);
+}
+
+.form-label {
+    display: block;
+    margin-bottom: var(--space-sm);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.form-label.required::after {
+    content: ' *';
+    color: var(--danger-color);
+}
+
+.form-help {
+    font-size: var(--font-size-xs);
+    color: var(--text-secondary);
+    margin-top: var(--space-xs);
+}
+
+.form-row {
+    display: flex;
+    gap: var(--space-md);
+}
+
+/* ========================================
+   6. CARD COMPONENTS
+======================================== */
+.card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: var(--space-lg);
+    transition: all var(--transition-fast);
+}
+
+.card:hover {
+    border-color: var(--accent-green);
+}
+
+/* ========================================
+   7. HEADER COMPONENT
+======================================== */
+.app-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--header-height);
+    background-color: var(--secondary-bg);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--space-lg);
+    z-index: var(--z-header);
+    transition: all var(--transition-normal);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: var(--font-size-lg);
+    font-weight: bold;
+    color: var(--accent-green);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.header-logo:hover {
+    transform: scale(1.05);
+}
+
+.header-logo i {
+    font-size: var(--font-size-xl);
+}
+
+.sidebar-toggle {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: var(--font-size-md);
+    padding: var(--space-sm);
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.sidebar-toggle:hover {
+    color: var(--text-primary);
+    background-color: var(--card-bg);
+}
+
+.current-dashboard {
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: var(--font-size-md);
+    opacity: 0.8;
+}
+
+.current-dashboard.no-dashboard {
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    color: var(--text-secondary);
+}
+
+.header-info {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+.header-actions {
+    display: flex;
+    gap: var(--space-sm);
+}
+
+.header-btn {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: var(--font-size-md);
+    padding: var(--space-sm);
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    position: relative;
+    min-width: 40px;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-btn:hover {
+    color: var(--text-primary);
+    background-color: var(--card-bg);
+    transform: translateY(-1px);
+}
+
+/* ========================================
+   8. SIDEBAR COMPONENT
+======================================== */
+.app-sidebar {
+    position: fixed;
+    left: 0;
+    top: var(--header-height);
+    width: var(--sidebar-width);
+    height: calc(100vh - var(--header-height));
+    background-color: var(--secondary-bg);
+    border-right: 1px solid var(--border-color);
+    padding: var(--space-lg);
+    transform: translateX(0);
+    transition: transform var(--transition-normal);
+    z-index: var(--z-sidebar);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.app-sidebar.collapsed {
+    transform: translateX(-100%);
+}
+
+.sidebar-header {
+    margin-bottom: var(--space-lg);
+}
+
+.sidebar-title {
+    font-size: var(--font-size-xl);
+    font-weight: bold;
+    margin-bottom: var(--space-md);
+    color: var(--text-primary);
+    letter-spacing: 0.5px;
+}
+
+.create-dashboard-btn {
+    width: 100%;
+    padding: var(--space-md);
+    background-color: var(--accent-green);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+}
+
+.create-dashboard-btn:hover {
+    background-color: #22c55e;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(74, 222, 128, 0.3);
+}
+
+.sidebar-search {
+    position: relative;
+    margin-bottom: var(--space-lg);
+}
+
+.search-input {
+    width: 100%;
+    padding: var(--space-sm) var(--space-xl) var(--space-sm) var(--space-md);
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    color: var(--text-primary);
+    font-size: var(--font-size-sm);
+    transition: all var(--transition-fast);
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--accent-green);
+    box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.2);
+}
+
+.search-icon {
+    position: absolute;
+    right: var(--space-md);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    pointer-events: none;
+}
+
+.dashboard-list {
+    list-style: none;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    color: var(--text-secondary);
+    padding: var(--space-xl) var(--space-lg);
+    margin-top: var(--space-xl);
+}
+
+.empty-state i {
+    font-size: 3rem;
+    margin-bottom: var(--space-lg);
+    opacity: 0.3;
+    color: var(--accent-green);
+}
+
+.empty-state h3 {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--space-md);
+    color: var(--text-primary);
+}
+
+.empty-state p {
+    line-height: 1.6;
+    margin-bottom: var(--space-lg);
+    max-width: 280px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.empty-state-action {
+    color: var(--accent-green);
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 2px solid transparent;
+    transition: all var(--transition-fast);
+}
+
+.empty-state-action:hover {
+    border-bottom-color: var(--accent-green);
+}
+
+/* ========================================
+   9. DASHBOARD LIST STYLES (TWO-LINE LAYOUT)
+======================================== */
+.dashboard-item {
+    position: relative;
+    margin-bottom: var(--space-sm);
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    min-height: 72px;  /* Taller for two lines */
+}
+
+.dashboard-item:hover {
+    background-color: var(--secondary-bg);
+    border-color: var(--accent-green);
+}
+
+.dashboard-item.active {
+    border-color: var(--accent-green);
+    background-color: var(--secondary-bg);
+}
+
+.dashboard-item.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background-color: var(--accent-green);
+}
+
+/* Top Row - Info icon in top-right corner */
+.dashboard-item-top {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    height: 32px;  /* Fixed height for top row */
+    margin-bottom: var(--space-xs);
+}
+
+/* Info Icon - Top right corner */
+.dashboard-info-btn {
+    background: var(--secondary-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: var(--space-xs);
+    border-radius: var(--border-radius-sm);
+    font-size: var(--font-size-sm);
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+    flex-shrink: 0;
+}
+
+.dashboard-info-btn:hover {
+    color: var(--accent-green);
+    border-color: var(--accent-green);
+    background-color: var(--card-bg);
+    transform: scale(1.1);
+}
+
+/* Action Buttons - Show on hover in top row */
+.dashboard-item-actions {
+    display: flex;
+    gap: 4px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(10px);
+    transition: all var(--transition-fast);
+    margin-right: var(--space-xs);
+}
+
+.dashboard-item:hover .dashboard-item-actions {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+}
+
+.dashboard-item-btn {
+    background: var(--secondary-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: var(--space-xs);
+    border-radius: var(--border-radius-sm);
+    font-size: var(--font-size-xs);
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+}
+
+.dashboard-item-btn:hover {
+    color: var(--text-primary);
+    border-color: var(--accent-green);
+    background-color: var(--card-bg);
+    transform: scale(1.1);
+}
+
+.dashboard-item-btn.danger:hover {
+    background-color: var(--danger-color);
+    border-color: var(--danger-color);
+    color: white;
+}
+
+/* Bottom Row - Full width dashboard name */
+.dashboard-item-bottom {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+/* Dashboard Name - Full width, no truncation needed */
+.dashboard-name {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--text-primary);
+    width: 100%;
+    line-height: 1.3;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    /* Allow text to wrap to multiple lines if needed */
+}
+
+.dashboard-item.active .dashboard-name {
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+/* Mobile optimization */
+@media (max-width: 768px) {
+    .dashboard-item {
+        padding: var(--space-sm);
+        min-height: 64px;
+    }
+    
+    .dashboard-item-top {
+        height: 28px;
+    }
+    
+    .dashboard-name {
+        font-size: var(--font-size-md);
+    }
+    
+    .dashboard-info-btn {
+        width: 24px;
+        height: 24px;
+        font-size: var(--font-size-xs);
+    }
+    
+    .dashboard-item-btn {
+        width: 20px;
+        height: 20px;
+        font-size: 10px;
+    }
+}
+/* ========================================
+   10. MAIN DASHBOARD AREA
+======================================== */
+.app-main {
+    margin-left: var(--sidebar-width);
+    margin-top: var(--header-height);
+    padding: var(--space-lg);
+    min-height: calc(100vh - var(--header-height));
+    background-color: var(--primary-bg);
+    transition: margin-left var(--transition-normal);
+}
+
+.app-main.expanded {
+    margin-left: 0;
+}
+
+.dashboard-container {
+    max-width: 100%;
+    height: 100%;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-lg);
+    flex-wrap: wrap;
+    gap: var(--space-md);
+}
+
+.dashboard-title {
+    font-size: var(--font-size-xxl);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.dashboard-title.no-dashboard {
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+.dashboard-actions {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.mode-toggle {
+    display: flex;
+    background-color: var(--card-bg);
+    border-radius: 25px;
+    padding: 2px;
+    border: 1px solid var(--border-color);
+}
+
+.mode-btn {
+    padding: var(--space-sm) var(--space-md);
+    border: none;
+    background: none;
+    color: var(--text-secondary);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+}
+
+.mode-btn.active {
+    background-color: var(--accent-green);
+    color: white;
+}
+
+.action-btn {
+    padding: var(--space-sm) var(--space-md);
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-size: var(--font-size-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.action-btn:hover {
+    background-color: var(--border-color);
+    transform: translateY(-1px);
+}
+
+.action-btn.primary {
+    background-color: var(--accent-green);
+    color: white;
+    border-color: var(--accent-green);
+}
+
+.action-btn.primary:hover {
+    background-color: #22c55e;
+}
+
+.action-btn.danger {
+    background-color: var(--danger-color);
+    border-color: var(--danger-color);
+    color: white;
+}
+
+.action-btn.danger:hover {
+    background-color: #dc2626;
+}
+
+/* Empty Dashboard State */
+.empty-dashboard {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+    color: var(--text-secondary);
+    text-align: center;
+    padding: var(--space-xl);
+    margin: var(--space-lg);
+}
+
+.empty-dashboard i {
+    font-size: 4rem;
+    margin-bottom: var(--space-lg);
+    opacity: 0.5;
+    color: var(--accent-green);
+}
+
+.empty-dashboard h3 {
+    margin-bottom: var(--space-md);
+    font-size: var(--font-size-lg);
+    color: var(--text-primary);
+}
+
+.empty-dashboard p {
+    max-width: 400px;
+    line-height: 1.6;
+    margin-bottom: var(--space-lg);
+}
+
+.dashboard-content {
+    background-color: var(--primary-bg);
+    border-radius: var(--border-radius);
+    min-height: 400px;
+    width: 100%;
+}
+
+.dashboard-info {
+    display: flex;
+    gap: var(--space-md);
+    margin-bottom: var(--space-sm);
+    font-size: var(--font-size-xs);
+    color: var(--text-secondary);
+}
+
+.dashboard-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.dashboard-meta i {
+    opacity: 0.7;
+}
+
+/* ========================================
+   11. MODAL COMPONENTS
+======================================== */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: var(--z-modal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-normal);
+}
+
+.modal.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(2px);
+}
+
+.modal-container {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    transform: scale(0.8) translateY(-50px);
+    transition: transform var(--transition-normal);
+}
+
+.modal.visible .modal-container {
+    transform: scale(1) translateY(0);
+}
+
+.modal-small { width: 400px; }
+.modal-medium { width: 600px; }
+.modal-large { width: 800px; }
+
+.modal-content {
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius-lg);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh;
+}
+
+.modal-header {
+    padding: var(--space-lg);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--secondary-bg);
+}
+
+.modal-title {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: var(--font-size-lg);
+    padding: var(--space-sm);
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-close:hover {
+    color: var(--text-primary);
+    background-color: var(--border-color);
+}
+
+.modal-body {
+    padding: var(--space-lg);
+    overflow-y: auto;
+    flex: 1;
+}
+
+.modal-footer {
+    padding: var(--space-lg);
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-sm);
+    background-color: var(--secondary-bg);
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
+/* Dashboard Info Section (Edit Modal) */
+.dashboard-info-section {
+    background-color: var(--secondary-bg);
+    border-radius: var(--border-radius);
+    padding: var(--space-md);
+    margin-top: var(--space-lg);
+    border: 1px solid var(--border-color);
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-sm);
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-xs) 0;
+}
+
+.info-label {
+    font-size: var(--font-size-xs);
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.info-value {
+    font-size: var(--font-size-xs);
+    color: var(--text-primary);
+    font-family: monospace;
+    background-color: var(--card-bg);
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+/* ========================================
+   12. NOTIFICATIONS
+======================================== */
+.notification {
+    font-family: var(--font-family);
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    padding: 12px 20px;
+    border-radius: var(--border-radius);
+    z-index: var(--z-notification);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    max-width: 300px;
+    font-size: var(--font-size-sm);
+    transform: translateX(100%);
+    transition: transform var(--transition-normal);
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+.notification.success {
+    background-color: var(--success-color);
+    color: white;
+}
+
+.notification.error {
+    background-color: var(--danger-color);
+    color: white;
+}
+
+.notification.warning {
+    background-color: var(--warning-color);
+    color: white;
+}
+
+/* ========================================
+   13. SIDEBAR OVERLAY (Mobile)
+======================================== */
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: calc(var(--z-sidebar) - 1);
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-normal);
+    backdrop-filter: blur(2px);
+}
+
+.sidebar-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ========================================
+   14. SCROLLBAR STYLES
+======================================== */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--secondary-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}
+
+.app-sidebar::-webkit-scrollbar {
+    width: 4px;
+}
+
+.app-sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.app-sidebar::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 2px;
+}
+
+.app-sidebar::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}
+
+/* ========================================
+   15. ANIMATION KEYFRAMES
+======================================== */
+@keyframes spin {
+    to { 
+        transform: rotate(360deg); 
+    }
+}
+
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+    }
+    to { 
+        opacity: 1; 
+    }
+}
+
+@keyframes slideUp {
+    from { 
+        transform: translateY(20px); 
+        opacity: 0; 
+    }
+    to { 
+        transform: translateY(0); 
+        opacity: 1; 
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.7;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes subtleGlow {
+    from {
+        box-shadow: 0 0 0 1px var(--accent-green), 0 4px 12px rgba(74, 222, 128, 0.15);
+    }
+    to {
+        box-shadow: 0 0 0 1px var(--accent-green), 0 6px 20px rgba(74, 222, 128, 0.25);
+    }
+}
+
+/* ========================================
+   16. RESPONSIVE DESIGN - TABLET
+======================================== */
+@media (max-width: 1024px) {
+    :root {
+        --sidebar-width: 260px;
+        --space-lg: 20px;
+    }
+    
+    .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-md);
+    }
+    
+    .dashboard-actions {
+        width: 100%;
+        justify-content: flex-start;
+    }
+}
+
+/* ========================================
+   17. RESPONSIVE DESIGN - MOBILE
+======================================== */
+@media (max-width: 768px) {
+    :root {
+        --sidebar-width: 100%;
+        --space-lg: 16px;
+        --space-md: 12px;
+    }
+    
+    /* Header Mobile */
+    .app-header {
+        padding: 0 var(--space-md) !important;
+    }
+    
+    .header-left {
+        gap: var(--space-md);
+        flex: 1;
+        min-width: 0;
+    }
+    
+    .current-dashboard {
+        font-size: var(--font-size-sm) !important;
+        max-width: 120px !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+    }
+    
+    .header-info {
+        display: none !important;
+    }
+    
+    .header-actions {
+        gap: var(--space-xs) !important;
+    }
+    
+    .header-btn {
+        min-width: 36px !important;
+        min-height: 36px !important;
+        padding: var(--space-xs) !important;
+    }
+    
+    /* Sidebar Mobile */
+    .app-sidebar {
+        width: 100% !important;
+        transform: translateX(-100%) !important;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    .app-sidebar.open {
+        transform: translateX(0) !important;
+    }
+    
+    .sidebar-title {
+        font-size: var(--font-size-lg) !important;
+        text-align: center;
+    }
+    
+    .dashboard-item {
+        margin-bottom: var(--space-sm) !important;
+    }
+    
+    .dashboard-item-main {
+        padding: var(--space-md) !important;
+    }
+    
+    .dashboard-item-meta {
+        gap: var(--space-sm) !important;
+    }
+    
+    .dashboard-item-actions {
+        opacity: 1 !important;
+        transform: translateX(0) !important;
+        position: static !important;
+        margin-top: var(--space-md) !important;
+        justify-content: center !important;
+        background: var(--secondary-bg) !important;
+        border-radius: var(--border-radius) !important;
+        padding: var(--space-sm) !important;
+    }
+    
+    .meta-item.description {
+        display: none !important;
+    }
+    
+    .create-dashboard-btn {
+        padding: var(--space-sm) !important;
+        font-size: var(--font-size-sm) !important;
+    }
+    
+    /* Main Content Mobile */
+    .app-main {
+        margin-left: 0 !important;
+        padding: var(--space-md) !important;
+    }
+    
+    .dashboard-title {
+        font-size: var(--font-size-xl) !important;
+    }
+    
+    .dashboard-actions {
+        width: 100% !important;
+        flex-wrap: wrap !important;
+        justify-content: flex-start !important;
+    }
+    
+    .mode-toggle {
+        order: -1 !important;
+        margin-bottom: var(--space-sm) !important;
+    }
+    
+    .dashboard-info {
+        flex-direction: column !important;
+        gap: var(--space-xs) !important;
+    }
+    
+    /* Empty Dashboard Mobile */
+    .empty-dashboard {
+        height: 50vh !important;
+        padding: var(--space-lg) !important;
+        margin: var(--space-md) 0 !important;
+    }
+    
+    .empty-dashboard i {
+        font-size: 3rem !important;
+    }
+    
+    .empty-dashboard h3 {
+        font-size: var(--font-size-md) !important;
+    }
+    
+    .empty-dashboard p {
+        font-size: var(--font-size-sm) !important;
+    }
+    
+    /* Modal Mobile */
+    .modal-container {
+        width: 95vw !important;
+        margin: var(--space-md) !important;
+        max-height: 85vh !important;
+    }
+    
+    .modal-header,
+    .modal-body,
+    .modal-footer {
+        padding: var(--space-md) !important;
+    }
+    
+    .modal-title {
+        font-size: var(--font-size-md) !important;
+    }
+    
+    .form-row {
+        flex-direction: column !important;
+        gap: 0 !important;
+    }
+    
+    .info-grid {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .modal-footer {
+        flex-direction: column-reverse !important;
+        gap: var(--space-sm) !important;
+    }
+    
+    .modal-footer .btn {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+    
+    .modal-footer .btn[style*="margin-right: auto"] {
+        margin-right: 0 !important;
+        order: -1 !important;
+    }
+}
+
+/* ========================================
+   18. SMALL MOBILE PHONES
+======================================== */
+@media (max-width: 480px) {
+    :root {
+        --space-lg: 12px;
+        --space-md: 8px;
+    }
+    
+    .app-header {
+        padding: 0 var(--space-sm) !important;
+    }
+    
+    .header-logo span {
+        display: none !important;
+    }
+    
+    .current-dashboard {
+        display: none !important;
+    }
+    
+    .app-main {
+        padding: var(--space-sm) !important;
+    }
+    
+    .dashboard-header {
+        gap: var(--space-sm) !important;
+    }
+    
+    .dashboard-actions {
+        gap: var(--space-xs) !important;
+    }
+    
+    .action-btn {
+        padding: var(--space-xs) var(--space-sm) !important;
+        font-size: var(--font-size-xs) !important;
+    }
+    
+    .mode-btn {
+        padding: var(--space-xs) var(--space-sm) !important;
+        font-size: var(--font-size-xs) !important;
+    }
+    
+    .sidebar-title {
+        font-size: var(--font-size-md) !important;
+    }
+    
+    .empty-dashboard {
+        padding: var(--space-md) !important;
+        height: auto !important;
+        min-height: 40vh !important;
+    }
+    
+    .empty-dashboard i {
+        font-size: 2.5rem !important;
+        margin-bottom: var(--space-md) !important;
+    }
+    
+    .dashboard-name {
+        font-size: var(--font-size-sm) !important;
+    }
+}
+
+/* ========================================
+   19. TOUCH-FRIENDLY ELEMENTS
+======================================== */
+@media (hover: none) and (pointer: coarse) {
+    .header-btn,
+    .action-btn,
+    .mode-btn,
+    .dashboard-item-btn,
+    .create-dashboard-btn,
+    .btn {
+        min-height: 44px !important;
+        min-width: 44px !important;
+    }
+    
+    .form-input,
+    .form-textarea,
+    .form-select {
+        min-height: 44px !important;
+        font-size: 16px !important; /* Prevents zoom on iOS */
+    }
+    
+    .dashboard-item {
+        min-height: 60px !important;
+        padding: var(--space-md) !important;
+    }
+    
+    .modal-close {
+        min-width: 44px !important;
+        min-height: 44px !important;
+    }
+}
+
+/* ========================================
+   20. LANDSCAPE MOBILE
+======================================== */
+@media (max-width: 768px) and (orientation: landscape) {
+    .app-sidebar {
+        width: 300px !important;
+    }
+    
+    .empty-dashboard {
+        height: 60vh !important;
+    }
+    
+    .modal-container {
+        max-height: 90vh !important;
+    }
+}
+
+/* ========================================
+   21. DEVICE SAFE AREAS (Notches)
+======================================== */
+@supports (padding: max(0px)) {
+    .app-header {
+        padding-left: max(var(--space-lg), env(safe-area-inset-left));
+        padding-right: max(var(--space-lg), env(safe-area-inset-right));
+    }
+    
+    .app-sidebar {
+        padding-left: max(var(--space-lg), env(safe-area-inset-left));
+    }
+    
+    @media (max-width: 768px) {
+        .app-header {
+            padding-left: max(var(--space-md), env(safe-area-inset-left));
+            padding-right: max(var(--space-md), env(safe-area-inset-right));
+        }
+    }
+}
+
+/* ========================================
+   22. IMPROVED SCROLLING
+======================================== */
+.app-sidebar,
+.modal-body {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+}
+
+/* ========================================
+   23. THEME TRANSITIONS
+======================================== */
+* {
+    transition: background-color var(--transition-normal), 
+                border-color var(--transition-normal), 
+                color var(--transition-normal);
+}
+
+/* ========================================
+   INFO POPUP STYLES
+======================================== */
+.info-popup-content {
+    background: var(--card-bg);
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    max-width: 400px;
+    width: 90%;
+    animation: slideUp 0.3s ease;
+}
+
+.info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-lg);
+    border-bottom: 1px solid var(--border-color);
+    background: var(--secondary-bg);
+    border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+}
+
+.info-header h3 {
+    margin: 0;
+    font-size: var(--font-size-lg);
+    color: var(--text-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-right: var(--space-md);
+}
+
+.info-close {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: var(--space-sm);
+    border-radius: var(--border-radius-sm);
+    transition: all var(--transition-fast);
+    font-size: var(--font-size-md);
+}
+
+.info-close:hover {
+    color: var(--text-primary);
+    background: var(--border-color);
+}
+
+.info-body {
+    padding: var(--space-lg);
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-md);
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.info-row:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+}
+
+.info-label {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.info-value {
+    font-size: var(--font-size-sm);
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.info-description {
+    margin-top: var(--space-lg);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--border-color);
+}
+
+.info-description p {
+    margin-top: var(--space-sm);
+    line-height: 1.5;
+    color: var(--text-primary);
+    font-size: var(--font-size-sm);
+}
+/* ========================================
+   RESPONSIVE LAYOUT FIXES
+======================================== */
+/* ========================================
+   SIDEBAR RESPONSIVE LAYOUT FIX
+======================================== */
+
+/* Main content responsive behavior */
+.app-main {
+    margin-left: var(--sidebar-width, 260px);
+    width: calc(100% - var(--sidebar-width, 260px));
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: var(--space-lg);
+    min-height: 100vh;
+}
+
+/* When sidebar is collapsed/hidden */
+.app-main.expanded,
+.app-main.sidebar-collapsed,
+body.sidebar-collapsed .app-main {
+    margin-left: 0 !important;
+    width: 100% !important;
+}
+
+/* Alternative selector if sidebar has collapsed class */
+.app-sidebar.collapsed ~ .app-main,
+.app-sidebar.hidden ~ .app-main {
+    margin-left: 0 !important;
+    width: 100% !important;
+}
+
+/* Dashboard content should expand with main area */
+.dashboard-content {
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+/* Grid should be responsive */
+.grid-stack {
+    width: 100% !important;
+    transition: all 0.3s ease;
+}
+
+/* Ensure widgets resize with container */
+.grid-stack-item {
+    transition: all 0.3s ease;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .app-main {
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+}
+
+
+/* ========================================
+   FORCE CORRECT LAYOUT
+======================================== */
+
+/* Hide empty state when grid has widgets */
+.grid-stack:not(:empty) ~ .empty-dashboard {
+    display: none !important;
+}
+
+/* Alternative: Hide empty state when grid is visible */
+.grid-stack[style*="display: block"] ~ .empty-dashboard {
+    display: none !important;
+}
+
+/* Force grid to take full width */
+.dashboard-content .grid-stack {
+    width: 100% !important;
+    display: block !important;
+    position: relative !important;
+    z-index: 999 !important;
+}
+
+/* Ensure empty state doesn't interfere */
+.dashboard-content .empty-dashboard {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    z-index: 1 !important;
+}
+
+/* When widgets exist, hide empty completely */
+.dashboard-content:has(.grid-stack-item) .empty-dashboard {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+/* ========================================
+   END OF MAIN.CSS
+   Total: ~1000+ lines of organized CSS
+======================================== */
